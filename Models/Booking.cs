@@ -12,5 +12,7 @@ namespace FlightManagementSystem.Models
         public string BookingRef { get; set; }
         public DateTime BookingDate { get; set; }
         public string Status { get; set; } 
+        public int PassengerId { get; set; }
+
     }
 }
