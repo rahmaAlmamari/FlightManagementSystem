@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.Models
 {
-    class Baggage
+    public class Baggage
     {
     }
 }
