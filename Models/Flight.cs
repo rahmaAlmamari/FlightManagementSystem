@@ -13,5 +13,7 @@ namespace FlightManagementSystem.Models
         public DateTime DepartureUtc { get; set; }
         public DateTime ArrivalUtc { get; set; }
         public StatusType Status { get; set; } 
+        public int RouteId { get; set; }
+        public int AircraftId { get; set; }
     }
 }
