@@ -8,6 +8,8 @@ namespace FlightManagementSystem.Models
 {
     public enum RoleType
     {
-
+        Pilot,
+        CoPilot,
+        FlightAttendant
     }
 }
