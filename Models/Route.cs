@@ -8,5 +8,7 @@ namespace FlightManagementSystem.Models
 {
     public class Route
     {
+        public int RouteId { get; set; }
+        public int DistanceKm { get; set; }
     }
 }
