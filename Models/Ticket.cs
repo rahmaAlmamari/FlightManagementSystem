@@ -12,5 +12,8 @@ namespace FlightManagementSystem.Models
         public string SeatNumber { get; set; }
         public decimal Fare { get; set; }
         public bool CheckedIn { get; set; }
+
+        public int BookingId { get; set; }
+        public int FlightId { get; set; }
     }
 }
