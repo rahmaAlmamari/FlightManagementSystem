@@ -80,3 +80,85 @@ passengers and airports — implemented using **layered architecture, EF Core, R
   - MaintenanceDate (DateTime) 
   - Type (string) 
   - Notes (string) 
+
+
+## 1. ERD Solution
+![ERD](./Images/FlightManagementSystem-ERD.png)
+
+## 2. Mapping Solution
+![Mapping](./Images/FlightManagementSystem-Mapping_New.png)
+
+## 3. Normalization Solution
+
+### Step 1 — First Normal Form (1NF)
+
+**Becouse of the following reasons, the database is already in 1NF:**
+- Each table has a primary key.
+- Each column contains atomic values.
+- No repeating groups are visible.
+
+**Tables in 1NF:**
+- Airport
+
+|AirportId | IATA | Name | City | Country | TimeZone |
+|----------|------|------|------|---------|----------|
+
+- Aircraft
+
+|AircraftId | TailNumber | Model | Capacity |
+|-----------|------------|-------|----------|
+
+- CrewMember
+
+|CrewId | FullName | Role | LicenseNo |
+|----------|----------|------|--------|
+
+- Route
+
+|RouteId | DistanceKm |AirportIdOrigin | AirportIdDestination |
+|--------|------------|----------------|----------------------|
+
+- Flight
+
+|FlightId | FlightNumber | DepartureUtc | ArrivalUtc | Status |RouteId | AircraftId |
+|---------|--------------|--------------|------------|--------|--------|------------|
+
+- Passenger
+
+|PassengerId |FullName |PassportNo |Nationality |DOB |
+|----------|----------|-----------|-------------|-----|
+
+- Booking
+
+|BookingId | BookingRef | BookingDate | Status |PassengerId |
+|----------|------------|-------------|--------|------------|
+
+- Ticket
+
+|TicketId | SeatNumber | Fare | CheckedIn |BookingId | FlightId |
+|---------|------------|------|-----------|----------|----------|
+
+- Baggage
+
+|BaggageId | TicketId | WeightKg | TagNumber |TicketId |
+|----------|----------|----------|-----------|---------|
+
+- AircraftMaintenance
+
+|MaintenanceId | MaintenanceDate | Type | Notes |AircraftId |
+|--------------|-----------------|------|-------|-----------|
+
+### Step 2 — Second Normal Form (2NF)
+
+**Becouse of the following reasons, the database is already in 2NF:**
+- All non-key attributes are fully functionally dependent on the primary key.
+- No partial dependencies exist.
+- There are no composite primary keys in the tables.
+- All attributes are dependent on the entire primary key.
+
+### Step 3 — Third Normal Form (3NF)
+
+**Becouse of the following reasons, the database is already in 3NF:**
+- There are no transitive dependencies.
+- All non-key attributes are dependent only on the primary key.
+
