@@ -12,6 +12,6 @@ namespace FlightManagementSystem.Models
         public string FlightNumber { get; set; }
         public DateTime DepartureUtc { get; set; }
         public DateTime ArrivalUtc { get; set; }
-        public string Status { get; set; } // e.g., Scheduled, Delayed, Cancelled
+        public StatusType Status { get; set; } 
     }
 }
