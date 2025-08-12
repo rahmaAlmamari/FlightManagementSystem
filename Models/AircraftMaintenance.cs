@@ -8,5 +8,9 @@ namespace FlightManagementSystem.Models
 {
     public class AircraftMaintenance
     {
+        public int MaintenanceId { get; set; }
+        public DateTime MaintenanceDate { get; set; }
+        public string Type { get; set; } 
+        public string Notes { get; set; }
     }
 }
