@@ -8,5 +8,8 @@ namespace FlightManagementSystem.Models
 {
     public enum StatusType
     {
+        Scheduled, 
+        Delayed, 
+        Cancelled
     }
 }
