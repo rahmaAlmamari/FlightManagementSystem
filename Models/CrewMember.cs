@@ -10,7 +10,7 @@ namespace FlightManagementSystem.Models
     {
         public int CrewId { get; set; }
         public string FullName { get; set; }
-        public string Role { get; set; } 
+        public RoleType Role { get; set; } 
         public string LicenseNo { get; set; }
     }
 }
