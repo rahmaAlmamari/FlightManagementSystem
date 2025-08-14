@@ -22,5 +22,10 @@ namespace FlightManagementSystem.Repostories
             return _context.AircraftMaintenances.ToList();
 
         }
+        //to get aircraft maintenance by id ...
+        public AircraftMaintenance GetAircraftMaintenanceById(int id)
+        {
+            return _context.AircraftMaintenances.FirstOrDefault(m => m.MaintenanceId == id);
+        }
     }
 }
