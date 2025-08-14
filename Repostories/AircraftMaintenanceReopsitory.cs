@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightManagementSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,12 @@ namespace FlightManagementSystem.Repostories
         public AircraftMaintenanceReopsitory(FlightDbContext context)
         {
             _context = context;
+        }
+        //to get all aircraft maintenances ...
+        public IEnumerable<AircraftMaintenance> GetAllAircraftMaintenances()
+        {
+            return _context.AircraftMaintenances.ToList();
+
         }
     }
 }
