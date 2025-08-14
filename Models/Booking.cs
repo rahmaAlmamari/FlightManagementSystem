@@ -14,5 +14,8 @@ namespace FlightManagementSystem.Models
         public string Status { get; set; } 
         public int PassengerId { get; set; }
 
+        // Navigation properties ...
+        public Passenger Passenger { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }
