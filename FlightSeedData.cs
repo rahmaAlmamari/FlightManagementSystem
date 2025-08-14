@@ -7,7 +7,7 @@ using FlightManagementSystem.Models;
 
 namespace FlightManagementSystem
 {
-    public class FlightSeedData
+    public static class FlightSeedData
     {
     }
 }
