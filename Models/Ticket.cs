@@ -15,5 +15,10 @@ namespace FlightManagementSystem.Models
 
         public int BookingId { get; set; }
         public int FlightId { get; set; }
+
+        // Navigation properties ...
+        public Booking Booking { get; set; }
+        public Flight Flight { get; set; }
+        public ICollection<Baggage> Baggage { get; set; }
     }
 }
