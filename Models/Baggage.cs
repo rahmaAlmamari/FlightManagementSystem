@@ -12,5 +12,8 @@ namespace FlightManagementSystem.Models
         public int TicketId { get; set; }
         public decimal WeightKg { get; set; }
         public string TagNumber { get; set; }
+
+        // Navigation property ...
+        public Ticket Ticket { get; set; }
     }
 }
