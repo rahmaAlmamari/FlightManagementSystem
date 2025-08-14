@@ -13,5 +13,8 @@ namespace FlightManagementSystem.Models
         public string Type { get; set; } 
         public string Notes { get; set; }
         public int AircraftId { get; set; }
+
+        // Navigation property ...
+        public Aircraft Aircraft { get; set; }
     }
 }
