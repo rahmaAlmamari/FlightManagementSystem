@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.Baggages.Update(baggage);
             _context.SaveChanges();
         }
+        //to delete baggage ...
+        public void DeleteBaggage(int id)
+        {
+            var baggage = _context.Baggages.FirstOrDefault(b => b.BaggageId == id);
+            if (baggage != null)
+            {
+                _context.Baggages.Remove(baggage);
+                _context.SaveChanges();
+            }
+        }
     }
 }
