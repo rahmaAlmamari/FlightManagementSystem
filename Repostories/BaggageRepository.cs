@@ -21,5 +21,10 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Baggages.ToList();
         }
+        //to get baggage by id ...
+        public Baggage GetBaggageById(int id)
+        {
+            return _context.Baggages.FirstOrDefault(b => b.BaggageId == id);
+        }
     }
 }
