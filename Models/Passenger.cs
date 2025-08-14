@@ -13,5 +13,8 @@ namespace FlightManagementSystem.Models
         public string PassportNo { get; set; }
         public string Nationality { get; set; }
         public DateTime DOB { get; set; }
+
+        // Navigation properties ...
+        public ICollection<Booking> Bookings { get; set; }
     }
 }
