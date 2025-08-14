@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.Routes.Add(route);
             _context.SaveChanges();
         }
+        //to update route ...
+        public void UpdateRoute(Route route)
+        {
+            _context.Routes.Update(route);
+            _context.SaveChanges();
+        }
     }
 }
