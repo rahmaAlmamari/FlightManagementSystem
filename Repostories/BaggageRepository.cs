@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Baggages.FirstOrDefault(b => b.BaggageId == id);
         }
+        //to add baggage ...
+        public void AddBaggage(Baggage baggage)
+        {
+            _context.Baggages.Add(baggage);
+            _context.SaveChanges();
+        }
     }
 }
