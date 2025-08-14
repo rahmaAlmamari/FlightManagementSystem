@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Routes.FirstOrDefault(r => r.RouteId == id);
         }
+        //to add route ...
+        public void AddRoute(Route route)
+        {
+            _context.Routes.Add(route);
+            _context.SaveChanges();
+        }
     }
 }
