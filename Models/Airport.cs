@@ -19,8 +19,11 @@ namespace FlightManagementSystem.Models
         public string Timezone { get; set; }
 
         // Navigation properties ...
+        [InverseProperty("Origin")]
         public ICollection<Route> RoutesOrigin { get; set; }
+        [InverseProperty("Destination")]
         public ICollection<Route> RoutesDestination { get; set; }
+
 
     }
 }
