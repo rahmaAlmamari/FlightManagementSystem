@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Bookings.FirstOrDefault(b => b.BookingId == id);
         }
+        //to add booking ...
+        public void AddBooking(Booking booking)
+        {
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+        }
     }
 }
