@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.Baggages.Add(baggage);
             _context.SaveChanges();
         }
+        //to update baggage ...
+        public void UpdateBaggage(Baggage baggage)
+        {
+            _context.Baggages.Update(baggage);
+            _context.SaveChanges();
+        }
     }
 }
