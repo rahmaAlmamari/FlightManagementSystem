@@ -8,5 +8,7 @@ namespace FlightManagementSystem.Repostories
 {
     public class BaggageRepository
     {
+        //to create field of FlightDbContext ...
+        private readonly FlightDbContext _context;
     }
 }
