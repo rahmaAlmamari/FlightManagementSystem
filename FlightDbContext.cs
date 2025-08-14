@@ -43,6 +43,18 @@ namespace FlightManagementSystem
                       .HasMaxLength(3);
                 entity.HasIndex(a => a.IATA)
                       .IsUnique();
+
+                // One-to-many: Airport (Origin) -> Route
+                entity.HasMany(a => a.RoutesOrigin)
+                      .WithOne(r => r.Origin)
+                      .HasForeignKey(r => r.AirportIdOrigin)
+                      .OnDelete(DeleteBehavior.NoAction);
+
+                // One-to-many: Airport (Destination) -> Route
+                entity.HasMany(a => a.RoutesDestination)
+                      .WithOne(r => r.Destination)
+                      .HasForeignKey(r => r.AirportIdDestination)
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             // ---------------------
