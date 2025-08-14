@@ -15,5 +15,11 @@ namespace FlightManagementSystem.Models
         public StatusType Status { get; set; } 
         public int RouteId { get; set; }
         public int AircraftId { get; set; }
+
+        // Navigation properties ...
+        public Route Route { get; set; }
+        public Aircraft Aircraft { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
+        public ICollection<FlightCrew> FlightCrewMembers { get; set; }
     }
 }
