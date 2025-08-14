@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightManagementSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace FlightManagementSystem.Repostories
         public BaggageRepository(FlightDbContext context)
         {
             _context = context;
+        }
+        //to get all baggage ...
+        public IEnumerable<Baggage> GetAllBaggage()
+        {
+            return _context.Baggages.ToList();
         }
     }
 }
