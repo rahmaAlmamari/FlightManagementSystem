@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.Repostories
 {
-    class TicketRepository
+    public class TicketRepository
     {
     }
 }
