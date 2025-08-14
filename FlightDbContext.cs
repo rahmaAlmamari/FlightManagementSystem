@@ -38,23 +38,15 @@ namespace FlightManagementSystem
             modelBuilder.Entity<Airport>(entity =>
             {
                 entity.HasKey(a => a.AirportId);
+
                 entity.Property(a => a.IATA)
                       .IsRequired()
                       .HasMaxLength(3);
+
                 entity.HasIndex(a => a.IATA)
                       .IsUnique();
 
-                // One-to-many: Airport (Origin) -> Route
-                entity.HasMany(a => a.RoutesOrigin)
-                      .WithOne(r => r.Origin)
-                      .HasForeignKey(r => r.AirportIdOrigin)
-                      .OnDelete(DeleteBehavior.NoAction);
-
-                // One-to-many: Airport (Destination) -> Route
-                entity.HasMany(a => a.RoutesDestination)
-                      .WithOne(r => r.Destination)
-                      .HasForeignKey(r => r.AirportIdDestination)
-                      .OnDelete(DeleteBehavior.NoAction);
+                // Relationships handled by [InverseProperty] in the model
             });
 
             // ---------------------
@@ -64,13 +56,15 @@ namespace FlightManagementSystem
             {
                 entity.HasKey(r => r.RouteId);
 
-                entity.HasOne<Airport>()
-                      .WithMany()
+                // Foreign keys handled by [InverseProperty] in the model
+                // Optional: explicitly specify delete behavior if desired
+                entity.HasOne(r => r.Origin)
+                      .WithMany(a => a.RoutesOrigin)
                       .HasForeignKey(r => r.AirportIdOrigin)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Airport>()
-                      .WithMany()
+                entity.HasOne(r => r.Destination)
+                      .WithMany(a => a.RoutesDestination)
                       .HasForeignKey(r => r.AirportIdDestination)
                       .OnDelete(DeleteBehavior.Restrict);
             });
@@ -91,8 +85,8 @@ namespace FlightManagementSystem
             modelBuilder.Entity<AircraftMaintenance>(entity =>
             {
                 entity.HasKey(m => m.MaintenanceId);
-                entity.HasOne<Aircraft>()
-                      .WithMany()
+                entity.HasOne(m => m.Aircraft)
+                      .WithMany(a => a.Maintenances)
                       .HasForeignKey(m => m.AircraftId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
@@ -117,17 +111,16 @@ namespace FlightManagementSystem
                 entity.Property(f => f.Status)
                       .HasConversion<string>(); // store enum as string
 
-                entity.HasOne<Route>()
-                      .WithMany()
+                entity.HasOne(f => f.Route)
+                      .WithMany(r => r.Flights)
                       .HasForeignKey(f => f.RouteId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne<Aircraft>()
-                      .WithMany()
+                entity.HasOne(f => f.Aircraft)
+                      .WithMany(a => a.Flights)
                       .HasForeignKey(f => f.AircraftId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                // FlightNumber + DepartureUtc should be unique
                 entity.HasIndex(f => new { f.FlightNumber, f.DepartureUtc })
                       .IsUnique();
             });
@@ -139,13 +132,13 @@ namespace FlightManagementSystem
             {
                 entity.HasKey(fc => new { fc.FlightId, fc.CrewId });
 
-                entity.HasOne<Flight>()
-                      .WithMany()
+                entity.HasOne(fc => fc.Flight)
+                      .WithMany(f => f.FlightCrewMembers)
                       .HasForeignKey(fc => fc.FlightId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne<CrewMember>()
-                      .WithMany()
+                entity.HasOne(fc => fc.CrewMember)
+                      .WithMany(c => c.FlightAssignments)
                       .HasForeignKey(fc => fc.CrewId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
@@ -180,8 +173,8 @@ namespace FlightManagementSystem
                 entity.HasIndex(b => b.BookingRef)
                       .IsUnique();
 
-                entity.HasOne<Passenger>()
-                      .WithMany()
+                entity.HasOne(b => b.Passenger)
+                      .WithMany(p => p.Bookings)
                       .HasForeignKey(b => b.PassengerId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
@@ -193,13 +186,13 @@ namespace FlightManagementSystem
             {
                 entity.HasKey(t => t.TicketId);
 
-                entity.HasOne<Booking>()
-                      .WithMany()
+                entity.HasOne(t => t.Booking)
+                      .WithMany(b => b.Tickets)
                       .HasForeignKey(t => t.BookingId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne<Flight>()
-                      .WithMany()
+                entity.HasOne(t => t.Flight)
+                      .WithMany(f => f.Tickets)
                       .HasForeignKey(t => t.FlightId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
@@ -211,12 +204,13 @@ namespace FlightManagementSystem
             {
                 entity.HasKey(b => b.BaggageId);
 
-                entity.HasOne<Ticket>()
-                      .WithMany()
+                entity.HasOne(b => b.Ticket)
+                      .WithMany(t => t.Baggage)
                       .HasForeignKey(b => b.TicketId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }
+
 
 
     }
