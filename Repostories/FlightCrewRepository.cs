@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.FlightCrews.Update(flightCrew);
             _context.SaveChanges();
         }
+        //to delete flight crew member ...
+        public void DeleteFlightCrewMember(int id)
+        {
+            var flightCrew = _context.FlightCrews.FirstOrDefault(fc => fc.CrewId + fc.FlightId == id);
+            if (flightCrew != null)
+            {
+                _context.FlightCrews.Remove(flightCrew);
+                _context.SaveChanges();
+            }
+        }
     }
 }
