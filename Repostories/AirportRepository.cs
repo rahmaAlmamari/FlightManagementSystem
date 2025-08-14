@@ -21,5 +21,10 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Airports.ToList();
         }
+        //to get airport by id ...
+        public Airport GetAirportById(int id)
+        {
+            return _context.Airports.FirstOrDefault(a => a.AirportId == id);
+        }
     }
 }
