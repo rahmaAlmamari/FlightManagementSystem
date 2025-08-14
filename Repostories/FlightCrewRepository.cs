@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.Repostories
 {
-    public class FlightCrewRepository
+    public class FlightCrewRepository : IFlightCrewRepository
     {
         //to create field of FlightDbContext ...
         private readonly FlightDbContext _context;
@@ -24,7 +24,7 @@ namespace FlightManagementSystem.Repostories
         //to get flight crew member by id ...
         public FlightCrew GetFlightCrewMemberById(int id)
         {
-            return _context.FlightCrews.FirstOrDefault(fc => fc.CrewId+fc.FlightId == id);
+            return _context.FlightCrews.FirstOrDefault(fc => fc.CrewId + fc.FlightId == id);
         }
         //to add flight crew member ...
         public void AddFlightCrewMember(FlightCrew flightCrew)
