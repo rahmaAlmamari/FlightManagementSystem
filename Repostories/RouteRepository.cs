@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.Routes.Update(route);
             _context.SaveChanges();
         }
+        //to delete route ...
+        public void DeleteRoute(int id)
+        {
+            var route = _context.Routes.FirstOrDefault(r => r.RouteId == id);
+            if (route != null)
+            {
+                _context.Routes.Remove(route);
+                _context.SaveChanges();
+            }
+        }
     }
 }
