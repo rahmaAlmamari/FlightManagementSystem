@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.FlightCrews.FirstOrDefault(fc => fc.CrewId+fc.FlightId == id);
         }
+        //to add flight crew member ...
+        public void AddFlightCrewMember(FlightCrew flightCrew)
+        {
+            _context.FlightCrews.Add(flightCrew);
+            _context.SaveChanges();
+        }
     }
 }
