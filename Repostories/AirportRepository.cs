@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Airports.FirstOrDefault(a => a.AirportId == id);
         }
+        //to add airport ...
+        public void AddAirport(Airport airport)
+        {
+            _context.Airports.Add(airport);
+            _context.SaveChanges();
+        }
     }
 }
