@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.Repostories
 {
-    public class BookingRepository
+    public class BookingRepository : IBookingRepository
     {
         //to create field of FlightDbContext ...
         private readonly FlightDbContext _context;
@@ -48,4 +48,5 @@ namespace FlightManagementSystem.Repostories
                 _context.SaveChanges();
             }
         }
+    }
 }
