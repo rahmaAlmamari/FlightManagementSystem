@@ -9,5 +9,7 @@ namespace FlightManagementSystem
 {
     public static class FlightSeedData
     {
+        //to add data to the database ...
+
     }
 }
