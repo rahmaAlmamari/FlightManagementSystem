@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.Airports.Update(airport);
             _context.SaveChanges();
         }
+        //to delete airport ...
+        public void DeleteAirport(int id)
+        {
+            var airport = _context.Airports.FirstOrDefault(a => a.AirportId == id);
+            if (airport != null)
+            {
+                _context.Airports.Remove(airport);
+                _context.SaveChanges();
+            }
+        }
     }
 }
