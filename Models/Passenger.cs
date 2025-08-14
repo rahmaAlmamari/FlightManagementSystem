@@ -9,8 +9,9 @@ namespace FlightManagementSystem.Models
     public class Passenger
     {
         public int PassengerId { get; set; }
-        public int TicketId { get; set; }
-        public decimal WeightKg { get; set; }
-        public string TagNumber { get; set; }
+        public string FullName { get; set; }
+        public string PassportNo { get; set; }
+        public string Nationality { get; set; }
+        public DateTime DOB { get; set; }
     }
 }
