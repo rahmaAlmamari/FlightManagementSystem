@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightManagementSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace FlightManagementSystem.Repostories
         public FlightCrewRepository(FlightDbContext context)
         {
             _context = context;
+        }
+        //to get all flight crew members ...
+        public IEnumerable<FlightCrew> GetAllFlightCrewMembers()
+        {
+            return _context.FlightCrews.ToList();
         }
     }
 }
