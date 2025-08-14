@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Aircrafts.FirstOrDefault(a => a.AircraftId == id);
         }
+        //to add aircraft ...
+        public void AddAircraft(Aircraft aircraft)
+        {
+            _context.Aircrafts.Add(aircraft);
+            _context.SaveChanges();
+        }
     }
 }
