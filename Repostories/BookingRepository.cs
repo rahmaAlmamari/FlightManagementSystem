@@ -38,5 +38,14 @@ namespace FlightManagementSystem.Repostories
             _context.Bookings.Update(booking);
             _context.SaveChanges();
         }
-    }
+        //to delete booking ...
+        public void DeleteBooking(int id)
+        {
+            var booking = _context.Bookings.FirstOrDefault(b => b.BookingId == id);
+            if (booking != null)
+            {
+                _context.Bookings.Remove(booking);
+                _context.SaveChanges();
+            }
+        }
 }
