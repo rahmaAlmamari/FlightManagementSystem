@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.Repostories
 {
-    public class CrewMemberRepository
+    public class CrewMemberRepository : ICrewMemberRepository
     {
         //to create field of FlightDbContext ...
         private readonly FlightDbContext _context;
