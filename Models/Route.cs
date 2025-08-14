@@ -12,5 +12,10 @@ namespace FlightManagementSystem.Models
         public int DistanceKm { get; set; }
         public int AirportIdOrigin { get; set; } // Origin airport ID
         public int AirportIdDestination { get; set; } // Destination airport ID
+
+        // Navigation properties ...
+        public Airport Origin { get; set; }
+        public Airport Destination { get; set; }
+        public ICollection<Flight> Flights { get; set; }
     }
 }
