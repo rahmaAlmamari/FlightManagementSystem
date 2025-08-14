@@ -21,5 +21,10 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.FlightCrews.ToList();
         }
+        //to get flight crew member by id ...
+        public FlightCrew GetFlightCrewMemberById(int id)
+        {
+            return _context.FlightCrews.FirstOrDefault(fc => fc.CrewId+fc.FlightId == id);
+        }
     }
 }
