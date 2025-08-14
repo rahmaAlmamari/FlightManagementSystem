@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.Aircrafts.Add(aircraft);
             _context.SaveChanges();
         }
+        //to update aircraft ...
+        public void UpdateAircraft(Aircraft aircraft)
+        {
+            _context.Aircrafts.Update(aircraft);
+            _context.SaveChanges();
+        }
     }
 }
