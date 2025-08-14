@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.Passengers.Add(passenger);
             _context.SaveChanges();
         }
+        //to update passenger ...
+        public void UpdatePassenger(Passenger passenger)
+        {
+            _context.Passengers.Update(passenger);
+            _context.SaveChanges();
+        }
     }
 }
