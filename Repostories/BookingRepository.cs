@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.Bookings.Add(booking);
             _context.SaveChanges();
         }
+        //to update booking ...
+        public void UpdateBooking(Booking booking)
+        {
+            _context.Bookings.Update(booking);
+            _context.SaveChanges();
+        }
     }
 }
