@@ -27,5 +27,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.AircraftMaintenances.FirstOrDefault(m => m.MaintenanceId == id);
         }
+        //to add aircraft maintenance ...
+        public void AddAircraftMaintenance(AircraftMaintenance maintenance)
+        {
+            _context.AircraftMaintenances.Add(maintenance);
+            _context.SaveChanges();
+        }
     }
 }
