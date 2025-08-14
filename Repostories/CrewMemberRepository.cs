@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.CrewMembers.Add(crewMember);
             _context.SaveChanges();
         }
+        //to update crew member ...
+        public void UpdateCrewMember(CrewMember crewMember)
+        {
+            _context.CrewMembers.Update(crewMember);
+            _context.SaveChanges();
+        }
     }
 }
