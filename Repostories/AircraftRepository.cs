@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.Aircrafts.Update(aircraft);
             _context.SaveChanges();
         }
+        //to delete aircraft ...
+        public void DeleteAircraft(int id)
+        {
+            var aircraft = _context.Aircrafts.FirstOrDefault(a => a.AircraftId == id);
+            if (aircraft != null)
+            {
+                _context.Aircrafts.Remove(aircraft);
+                _context.SaveChanges();
+            }
+        }
     }
 }
