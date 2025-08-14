@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +17,10 @@ namespace FlightManagementSystem.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Timezone { get; set; }
+
+        // Navigation properties ...
+        public ICollection<Route> RoutesOrigin { get; set; }
+        public ICollection<Route> RoutesDestination { get; set; }
 
     }
 }
