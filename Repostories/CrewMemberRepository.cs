@@ -10,5 +10,10 @@ namespace FlightManagementSystem.Repostories
     {
         //to create field of FlightDbContext ...
         private readonly FlightDbContext _context;
+        // Constructor to initialize the context ...
+        public CrewMemberRepository(FlightDbContext context)
+        {
+            _context = context;
+        }
     }
 }
