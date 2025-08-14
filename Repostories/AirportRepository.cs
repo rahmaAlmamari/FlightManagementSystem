@@ -32,5 +32,11 @@ namespace FlightManagementSystem.Repostories
             _context.Airports.Add(airport);
             _context.SaveChanges();
         }
+        //to update airport ...
+        public void UpdateAirport(Airport airport)
+        {
+            _context.Airports.Update(airport);
+            _context.SaveChanges();
+        }
     }
 }
