@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem
 {
-    class FlightSeedData
+    public class FlightSeedData
     {
     }
 }
