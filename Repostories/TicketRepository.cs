@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.Tickets.Update(ticket);
             _context.SaveChanges();
         }
+        //to delete ticket ...
+        public void DeleteTicket(int id)
+        {
+            var ticket = _context.Tickets.FirstOrDefault(t => t.TicketId == id);
+            if (ticket != null)
+            {
+                _context.Tickets.Remove(ticket);
+                _context.SaveChanges();
+            }
+        }
     }
 }
