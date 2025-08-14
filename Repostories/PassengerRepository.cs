@@ -26,5 +26,11 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Passengers.FirstOrDefault(p => p.PassengerId == id);
         }
+        //to add passenger ...
+        public void AddPassenger(Passenger passenger)
+        {
+            _context.Passengers.Add(passenger);
+            _context.SaveChanges();
+        }
     }
 }
