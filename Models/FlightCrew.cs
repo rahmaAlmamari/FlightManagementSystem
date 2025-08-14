@@ -11,5 +11,9 @@ namespace FlightManagementSystem.Models
         public string RoleOnFlight { get; set; }
         public int FlightId { get; set; }
         public int CrewId { get; set; }
+
+        // Navigation properties ...
+        public Flight Flight { get; set; }
+        public CrewMember CrewMember { get; set; }
     }
 }
