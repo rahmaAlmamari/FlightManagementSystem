@@ -39,5 +39,15 @@ namespace FlightManagementSystem.Repostories
             _context.AircraftMaintenances.Update(maintenance);
             _context.SaveChanges();
         }
+        //to delete aircraft maintenance ...
+        public void DeleteAircraftMaintenance(int id)
+        {
+            var maintenance = _context.AircraftMaintenances.FirstOrDefault(m => m.MaintenanceId == id);
+            if (maintenance != null)
+            {
+                _context.AircraftMaintenances.Remove(maintenance);
+                _context.SaveChanges();
+            }
+        }
     }
 }
