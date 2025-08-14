@@ -21,5 +21,10 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Flights.ToList();
         }
+        //to get flight by id ...
+        public Flight GetFlightById(int id)
+        {
+            return _context.Flights.FirstOrDefault(f => f.FlightId == id);
+        }
     }
 }
