@@ -12,5 +12,9 @@ namespace FlightManagementSystem.Models
         public string TailNumber { get; set; }
         public string Model { get; set; }
         public int Capacity { get; set; }
+
+        // Navigation property ...
+        public ICollection<Flight> Flights { get; set; }
+        public ICollection<AircraftMaintenance> Maintenances { get; set; }
     }
 }
