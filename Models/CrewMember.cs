@@ -12,5 +12,8 @@ namespace FlightManagementSystem.Models
         public string FullName { get; set; }
         public RoleType Role { get; set; } 
         public string LicenseNo { get; set; }
+
+        // Navigation properties ...
+        public ICollection<FlightCrew> FlightAssignments { get; set; }
     }
 }
