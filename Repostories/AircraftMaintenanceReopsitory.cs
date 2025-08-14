@@ -33,5 +33,11 @@ namespace FlightManagementSystem.Repostories
             _context.AircraftMaintenances.Add(maintenance);
             _context.SaveChanges();
         }
+        //to update aircraft maintenance ...
+        public void UpdateAircraftMaintenance(AircraftMaintenance maintenance)
+        {
+            _context.AircraftMaintenances.Update(maintenance);
+            _context.SaveChanges();
+        }
     }
 }
