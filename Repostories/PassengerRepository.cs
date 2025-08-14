@@ -38,5 +38,15 @@ namespace FlightManagementSystem.Repostories
             _context.Passengers.Update(passenger);
             _context.SaveChanges();
         }
+        //to delete passenger ...
+        public void DeletePassenger(int id)
+        {
+            var passenger = _context.Passengers.FirstOrDefault(p => p.PassengerId == id);
+            if (passenger != null)
+            {
+                _context.Passengers.Remove(passenger);
+                _context.SaveChanges();
+            }
+        }
     }
 }
