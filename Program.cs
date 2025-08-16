@@ -8,7 +8,9 @@ namespace FlightManagementSystem
         static void Main(string[] args)
         {
             //to creat object for FlightDbContext ...
-            FlightDbContext context = new FlightDbContext();
+            using FlightDbContext context = new FlightDbContext();
+            //to ensure the database is created and migrations are applied ...
+            context.Database.EnsureCreated();
             //to create object for repositories ...
             IAirportRepository airportRepo = new AirportRepository(context);
             IRouteRepository routeRepo = new RouteRepository(context);
