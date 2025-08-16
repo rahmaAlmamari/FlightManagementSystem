@@ -9,5 +9,8 @@ namespace FlightManagementSystem.Repostories
         IEnumerable<CrewMember> GetAllCrewMembers();
         CrewMember GetCrewMemberById(int id);
         void UpdateCrewMember(CrewMember crewMember);
+        IEnumerable<CrewMember> GetCrewMemberByRole(RoleType role);
+        IEnumerable<CrewMember> GetAvailableCrewMembers(DateTime dep);
+
     }
 }
