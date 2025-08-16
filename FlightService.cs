@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Azure.Core.HttpHeader;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FlightManagementSystem
@@ -162,5 +164,31 @@ namespace FlightManagementSystem
                 .ToList();
             return topRoutes;
         }
+        //to GetSeatOccupancyHeatmapForEachFlight,
+        //compute occupancy rate = tickets sold / aircraft capacity.Return flights with
+        //occupancy > 80% or top N ...
+        public IEnumerable<SeatOccupancyOutput> GetSeatOccupancyHeatmap(DateTime fromDate,DateTime toDate)
+        {
+            //decimal threshold = 80.0;
+            var flights = _flightRepository.GetFlightsByDateRange(fromDate, toDate);
+
+            var result = flights
+                .Select(f => new SeatOccupancyOutput
+                {
+                    FlightId = f.FlightId,
+                    RouteId = f.RouteId,
+                    AircraftId = f.AircraftId,
+                    TicketsSold = f.Tickets.Count,
+                    Capacity = f.Aircraft.Capacity,  
+                    OccupancyRate = f.Aircraft.Capacity > 0
+                        ? (f.Tickets.Count * 100.0) / f.Aircraft.Capacity
+                        : 0
+                })
+                .Where(o => o.OccupancyRate >= 80.0)
+                .OrderByDescending(o => o.OccupancyRate);
+
+            return result.ToList();
+        }
+
     }
 }
