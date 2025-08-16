@@ -48,5 +48,12 @@ namespace FlightManagementSystem.Repostories
                 _context.SaveChanges();
             }
         }
+        //to GetBookingsByDateRange using from and to dates ...
+        public IEnumerable<Booking> GetBookingsByDateRange(DateTime from, DateTime to)
+        {
+            return _context.Bookings
+                .Where(b => b.BookingDate >= from && b.BookingDate <= to)
+                .ToList();
+        }
     }
 }
