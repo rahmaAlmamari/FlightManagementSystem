@@ -24,10 +24,10 @@ namespace FlightManagementSystem
             IFlightCrewRepository flightCrewRepo = new FlightCrewRepository(context);
             IAircraftMaintenanceReopsitory maintenanceRepo = new AircraftMaintenanceReopsitory(context);
 
-            ////to run the CreateSampleData method from FlightSeedData class ...
-            ////to call the CreateSampleData method ...
-            //FlightSeedData.CreateSampleData(airportRepo, routeRepo, aircraftRepo, flightRepo, 
-            //                                passengerRepo, bookingRepo, ticketRepo, baggageRepo, 
+            //to run the CreateSampleData method from FlightSeedData class ...
+            //to call the CreateSampleData method ...
+            //FlightSeedData.CreateSampleData(airportRepo, routeRepo, aircraftRepo, flightRepo,
+            //                                passengerRepo, bookingRepo, ticketRepo, baggageRepo,
             //                                crewRepo, flightCrewRepo, maintenanceRepo);
 
             //to create a FlightService object ...
@@ -43,9 +43,10 @@ namespace FlightManagementSystem
                 Console.WriteLine("Welcome to the Flight Management System");
                 Console.WriteLine("1. View Daily Flight Manifest");
                 Console.WriteLine("0. Exit");
+                Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
 
-                switch (choice) 
+                switch (choice)
                 {
                     case "1":
                         Console.WriteLine("Enter From Date (yyyy-MM-dd):");
@@ -53,6 +54,13 @@ namespace FlightManagementSystem
                         Console.WriteLine("Enter To Date (yyyy-MM-dd):");
                         DateTime toDate = DateTime.Parse(Console.ReadLine());
                         var manifest = flightService.GetDailyFlightManifest(fromDate, toDate);
+                        if (manifest == null || !manifest.Any())
+                        {
+                            Console.WriteLine("No flights found for the selected date range.");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
                         Console.WriteLine("Daily Flight Manifest:");
                         foreach (var item in manifest)
                         {
@@ -63,6 +71,8 @@ namespace FlightManagementSystem
                                               $"Total Baggage Weight: {item.TotalBaggageWeight}");
 
                         }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
                         break;
                 }
 
