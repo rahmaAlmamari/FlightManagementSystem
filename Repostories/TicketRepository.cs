@@ -48,14 +48,21 @@ namespace FlightManagementSystem.Repostories
                 _context.SaveChanges();
             }
         }
-        //to GetTicketsByBooking using BookingId ...
+        //to GetTicketsByBooking using bookingRef ...
         public IEnumerable<Ticket> GetTicketsByBooking(string bookingRef)
         {
             return _context.Tickets
                 .Where(t => t.Booking.BookingRef == bookingRef)
                 .ToList();
         }
+        //to GetTicketsByPassenger using passengerId ...
+        public IEnumerable<Ticket> GetTicketsByPassenger(int passengerId)
+        {
+            return _context.Tickets
+                .Where(t => t.Booking.PassengerId == passengerId)
+                .ToList();
 
 
+        }
     }
 }
