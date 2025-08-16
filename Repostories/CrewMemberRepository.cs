@@ -48,5 +48,11 @@ namespace FlightManagementSystem.Repostories
                 _context.SaveChanges();
             }
         }
+        //to GetCrewMemberByRole ...
+        public IEnumerable<CrewMember> GetCrewMemberByRole(RoleType role)
+        {
+            return _context.CrewMembers.Where(cm => cm.Role == role).ToList();
+        }
+
     }
 }
