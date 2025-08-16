@@ -8,5 +8,7 @@ namespace FlightManagementSystem.DTO
 {
     public class DailyFlightManifestOutput_CrewList
     {
+        public string Name { get; set; }
+        public string Role { get; set; }
     }
 }
