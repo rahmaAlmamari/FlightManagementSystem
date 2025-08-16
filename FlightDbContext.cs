@@ -13,7 +13,7 @@ namespace FlightManagementSystem
         //Override the OnConfiguring method to set up the database connection ...
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=LAPTOP-IUF9HHIH;Initial Catalog=FlightDB;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=LAPTOP-IUF9HHIH;Initial Catalog=FlightDB_New;Integrated Security=True;TrustServerCertificate=True");
         }
         // DbSet properties for each model ...
         public DbSet<Aircraft> Aircrafts { get; set; }
