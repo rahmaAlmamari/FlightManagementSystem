@@ -27,6 +27,12 @@ namespace FlightManagementSystem
             //FlightSeedData.CreateSampleData(airportRepo, routeRepo, aircraftRepo, flightRepo, 
             //                                passengerRepo, bookingRepo, ticketRepo, baggageRepo, 
             //                                crewRepo, flightCrewRepo, maintenanceRepo);
+
+            //to create a FlightService object ...
+            FlightService flightService = new FlightService(maintenanceRepo, airportRepo, routeRepo,
+                                                            aircraftRepo, flightRepo, passengerRepo,
+                                                            bookingRepo, ticketRepo, baggageRepo,
+                                                            crewRepo, flightCrewRepo);
         }
     }
 }
