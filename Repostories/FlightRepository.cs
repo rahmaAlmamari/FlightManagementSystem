@@ -53,7 +53,8 @@ namespace FlightManagementSystem.Repostories
         public IEnumerable<Flight> GetFlightsByDateRange(DateTime from, DateTime to)
         {
             return _context.Flights
-                .Include(f => f.Tickets)   // Include tickets
+                .Include(f => f.Tickets)   // Include tickets ...
+                .Include(f => f.Aircraft)   // include aircraft to get Capacity ...
                 .Where(f => f.DepartureUtc >= from && f.ArrivalUtc <= to)
                 .ToList();
         }
