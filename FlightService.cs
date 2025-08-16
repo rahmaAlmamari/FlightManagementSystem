@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Azure.Core.HttpHeader;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FlightManagementSystem
 {
@@ -137,6 +139,28 @@ namespace FlightManagementSystem
                 });
             }
             return manifest;
+        }
+        //to GetTopRoutesByRevenue using a date range, compute revenue per route
+        //(sum of ticket fares), ordered descending; include 
+        //number of seats sold and average fare.
+        //Use GroupBy and projection.
+        public IEnumerable<TopRouteByRevenueOutput> GetTopRoutesByRevenue(DateTime FromDate, DateTime ToDate)
+        {
+            // Get all flights for the given date range ...
+            var flights = _flightRepository.GetFlightsByDateRange(FromDate, ToDate);
+            // Group by route and calculate revenue, seats sold, and average fare ...
+            var topRoutes = flights
+                .GroupBy(flight => flight.RouteId)
+                .Select(group => new TopRouteByRevenueOutput
+                {
+                    RouteId = group.Key,
+                    TotalRevenue = group.Sum(flight => flight.Tickets.Sum(ticket => ticket.Fare)),
+                    SeatsSold = group.Sum(flight => flight.Tickets.Count),
+                    AverageFare = group.Average(flight => flight.Tickets.Average(ticket => ticket.Fare))
+                })
+                .OrderByDescending(route => route.TotalRevenue)
+                .ToList();
+            return topRoutes;
         }
     }
 }
