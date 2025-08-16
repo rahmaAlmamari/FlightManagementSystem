@@ -55,5 +55,12 @@ namespace FlightManagementSystem.Repostories
                 .Where(f => f.DepartureUtc >= from && f.ArrivalUtc <= to)
                 .ToList();
         }
+        //to GetFlightsByRoute using route id ...
+        public IEnumerable<Flight> GetFlightsByRoute(int routeId)
+        {
+            return _context.Flights
+                .Where(f => f.RouteId == routeId)
+                .ToList();
+        }
     }
 }
