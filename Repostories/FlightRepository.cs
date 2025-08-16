@@ -48,5 +48,12 @@ namespace FlightManagementSystem.Repostories
                 _context.SaveChanges();
             }
         }
+        //to GetFlightsByDateRange using from and to dates ...
+        public IEnumerable<Flight> GetFlightsByDateRange(DateTime from, DateTime to)
+        {
+            return _context.Flights
+                .Where(f => f.DepartureUtc >= from && f.ArrivalUtc <= to)
+                .ToList();
+        }
     }
 }
