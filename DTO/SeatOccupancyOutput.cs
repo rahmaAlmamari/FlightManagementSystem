@@ -13,6 +13,6 @@ namespace FlightManagementSystem.DTO
         public int AircraftId { get; set; }
         public int TicketsSold { get; set; }
         public int Capacity { get; set; }
-        public decimal OccupancyRate { get; set; }
+        public double OccupancyRate { get; set; }
     }
 }
