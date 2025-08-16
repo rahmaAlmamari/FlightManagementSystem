@@ -9,5 +9,8 @@ namespace FlightManagementSystem.Repostories
         IEnumerable<Ticket> GetAllTickets();
         Ticket GetTicketById(int id);
         void UpdateTicket(Ticket ticket);
+        IEnumerable<Ticket> GetTicketsByBooking(string bookingRef);
+        IEnumerable<Ticket> GetTicketsByPassenger(int passengerId);
+
     }
 }
