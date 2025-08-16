@@ -35,6 +35,12 @@ namespace FlightManagementSystem
                                                             aircraftRepo, flightRepo, passengerRepo,
                                                             bookingRepo, ticketRepo, baggageRepo,
                                                             crewRepo, flightCrewRepo);
+            //to create program menu ...
+            bool exit = true;
+            do
+            {
+
+            } while (exit);
         }
     }
 }
