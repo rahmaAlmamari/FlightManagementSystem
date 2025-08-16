@@ -1,4 +1,5 @@
 ﻿using FlightManagementSystem.Data;
+using FlightManagementSystem.Models;
 using FlightManagementSystem.Repostories;
 
 namespace FlightManagementSystem
@@ -42,6 +43,7 @@ namespace FlightManagementSystem
                 Console.Clear();
                 Console.WriteLine("Welcome to the Flight Management System");
                 Console.WriteLine("1. View Daily Flight Manifest");
+                Console.WriteLine("2. Get Top Routes By Revenue");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -69,6 +71,29 @@ namespace FlightManagementSystem
                                               $"Destination: {item.DestIATA}, Aircraft Tail: {item.AircraftTail}, " +
                                               $"Passenger Count: {item.PassengerCount}, Crew List: {string.Join(", ", item.CrewList.Select(c => $"{c.Name} ({c.Role})\n"))}, " +
                                               $"Total Baggage Weight: {item.TotalBaggageWeight}");
+
+                        }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case "2":
+                        Console.WriteLine("Enter From Date (yyyy-MM-dd):");
+                        DateTime from = DateTime.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter To Date (yyyy-MM-dd):");
+                        DateTime to = DateTime.Parse(Console.ReadLine());
+                        var TopRoutes = flightService.GetTopRoutesByRevenue(from, to);
+                        if (TopRoutes == null || !TopRoutes.Any())
+                        {
+                            Console.WriteLine("No Routes found for the selected date range.");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+                        Console.WriteLine("Daily Flight Manifest:");
+                        foreach (var item in TopRoutes)
+                        {
+                            Console.WriteLine($"Route: {item.RouteId}, Total Revenue: {item.TotalRevenue}, " +
+                                              $"Seats Sold: {item.SeatsSold}, Average Fare: {item.AverageFare}");
 
                         }
                         Console.WriteLine("Press any key to continue...");
