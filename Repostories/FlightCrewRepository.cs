@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightManagementSystem.Repostories
 {
@@ -19,7 +20,10 @@ namespace FlightManagementSystem.Repostories
         //to get all flight crew members ...
         public IEnumerable<FlightCrew> GetAllFlightCrewMembers()
         {
-            return _context.FlightCrews.ToList();
+            //return _context.FlightCrews.ToList();
+            return _context.FlightCrews
+                .Include(fc => fc.CrewMember)  // Include the navigation property
+                .ToList();
         }
         //to get flight crew member by id ...
         public FlightCrew GetFlightCrewMemberById(int id)
