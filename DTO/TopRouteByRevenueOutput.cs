@@ -8,5 +8,9 @@ namespace FlightManagementSystem.DTO
 {
     public class TopRouteByRevenueOutput
     {
+        public int RouteId { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public int SeatsSold { get; set; }
+        public decimal AverageFare { get; set; }
     }
 }
