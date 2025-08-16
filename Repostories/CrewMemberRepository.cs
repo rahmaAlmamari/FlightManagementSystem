@@ -53,6 +53,15 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.CrewMembers.Where(cm => cm.Role == role).ToList();
         }
+        //to GetAvailableCrewMembers ...
+        public IEnumerable<CrewMember> GetAvailableCrewMembers(DateTime dep)
+        {
+            //crew member is available if they are not assigned to any flight at the given departure time ...
+            return _context.CrewMembers
+                .Where(cm => !cm.FlightAssignments.Any(fa => fa.Flight.DepartureUtc == dep))
+                .ToList();
+        }
+
 
     }
 }
