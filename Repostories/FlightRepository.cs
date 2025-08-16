@@ -1,4 +1,5 @@
 ﻿using FlightManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,7 @@ namespace FlightManagementSystem.Repostories
         public IEnumerable<Flight> GetFlightsByDateRange(DateTime from, DateTime to)
         {
             return _context.Flights
+                .Include(f => f.Tickets)   // Include tickets
                 .Where(f => f.DepartureUtc >= from && f.ArrivalUtc <= to)
                 .ToList();
         }
