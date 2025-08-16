@@ -9,5 +9,6 @@ namespace FlightManagementSystem.Repostories
         Aircraft GetAircraftById(int id);
         IEnumerable<Aircraft> GetAllAircrafts();
         void UpdateAircraft(Aircraft aircraft);
+        IEnumerable<Aircraft> GetAircraftDueForMaintenance(DateTime beforeDate);
     }
 }
