@@ -8,5 +8,7 @@ namespace FlightManagementSystem
 {
     public class FlightService
     {
+        //to creat object for FlightDbContext ...
+        FlightDbContext context = new FlightDbContext();
     }
 }
