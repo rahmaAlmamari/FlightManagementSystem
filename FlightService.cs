@@ -21,7 +21,31 @@ namespace FlightManagementSystem
         private readonly IBaggageRepository _baggageRepository;
         private readonly ICrewMemberRepository _crewMemberRepository;
         private readonly IFlightCrewRepository _flightCrewRepository;
-
+        //to create a constructor to initialize the repositories ...
+        public FlightService(IAircraftMaintenanceReopsitory aircraftMaintenanceReopsitory,
+                             IAirportRepository airportRepository,
+                             IRouteRepository routeRepository,
+                             IAircraftRepository aircraftRepository,
+                             IFlightRepository flightRepository,
+                             IPassengerRepository passengerRepository,
+                             IBookingRepository bookingRepository,
+                             ITicketRepository ticketRepository,
+                             IBaggageRepository baggageRepository,
+                             ICrewMemberRepository crewMemberRepository,
+                             IFlightCrewRepository flightCrewRepository)
+        {
+            _AircraftMaintenanceReopsitory = aircraftMaintenanceReopsitory;
+            _airportRepository = airportRepository;
+            _routeRepository = routeRepository;
+            _aircraftRepository = aircraftRepository;
+            _flightRepository = flightRepository;
+            _passengerRepository = passengerRepository;
+            _bookingRepository = bookingRepository;
+            _ticketRepository = ticketRepository;
+            _baggageRepository = baggageRepository;
+            _crewMemberRepository = crewMemberRepository;
+            _flightCrewRepository = flightCrewRepository;
+        }
 
     }
 }
