@@ -44,6 +44,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("Welcome to the Flight Management System");
                 Console.WriteLine("1. View Daily Flight Manifest");
                 Console.WriteLine("2. Get Top Routes By Revenue");
+                Console.WriteLine("3. Get Seat Occupancy Heatmap");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -89,11 +90,35 @@ namespace FlightManagementSystem
                             Console.ReadKey();
                             continue;
                         }
-                        Console.WriteLine("Daily Flight Manifest:");
+                        Console.WriteLine("Top Routes By Revenue:");
                         foreach (var item in TopRoutes)
                         {
                             Console.WriteLine($"Route: {item.RouteId}, Total Revenue: {item.TotalRevenue}, " +
                                               $"Seats Sold: {item.SeatsSold}, Average Fare: {item.AverageFare}");
+
+                        }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case "3":
+                        Console.WriteLine("Enter From Date (yyyy-MM-dd):");
+                        DateTime fromCase3 = DateTime.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter To Date (yyyy-MM-dd):");
+                        DateTime toCase3 = DateTime.Parse(Console.ReadLine());
+                        var SeatOccupancy = flightService.GetSeatOccupancyHeatmap(fromCase3, toCase3);
+                        if (SeatOccupancy == null || !SeatOccupancy.Any())
+                        {
+                            Console.WriteLine("No Flight > 80%.");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+                        Console.WriteLine("Seat Occupancy Heatmap:");
+                        foreach (var SO in SeatOccupancy)
+                        {
+                              Console.WriteLine($"FlightId: {SO.FlightId}, RouteId: {SO.RouteId}, " +
+                                              $"AircraftId: {SO.AircraftId}, Tickets Sold: {SO.TicketsSold}," +
+                                              $"Capacity: {SO.Capacity}, Occupancy Rate: {SO.OccupancyRate}");
 
                         }
                         Console.WriteLine("Press any key to continue...");
