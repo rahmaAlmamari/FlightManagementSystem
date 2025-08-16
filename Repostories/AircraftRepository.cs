@@ -48,6 +48,13 @@ namespace FlightManagementSystem.Repostories
                 _context.SaveChanges();
             }
         }
+        //to GetAircraftDueForMaintenance using beforeDate ...
+        public IEnumerable<Aircraft> GetAircraftDueForMaintenance(DateTime beforeDate)
+        {
+            return _context.Aircrafts
+                .Where(a => a.Maintenances.Any(m => m.MaintenanceDate < beforeDate))
+                .ToList();
 
+        }
     }
 }
