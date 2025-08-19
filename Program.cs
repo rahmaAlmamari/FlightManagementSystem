@@ -45,6 +45,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("1. View Daily Flight Manifest");
                 Console.WriteLine("2. Get Top Routes By Revenue");
                 Console.WriteLine("3. Get Seat Occupancy Heatmap");
+                Console.WriteLine("4. Get Percentage Of On-Tim ePerformance Per Route");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -119,6 +120,34 @@ namespace FlightManagementSystem
                               Console.WriteLine($"FlightId: {SO.FlightId}, RouteId: {SO.RouteId}, " +
                                               $"AircraftId: {SO.AircraftId}, Tickets Sold: {SO.TicketsSold}," +
                                               $"Capacity: {SO.Capacity}, Occupancy Rate: {SO.OccupancyRate}");
+
+                        }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case "4":
+                        Console.WriteLine("Enter From Date (yyyy-MM-dd):");
+                        DateTime fromCase4 = DateTime.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter To Date (yyyy-MM-dd):");
+                        DateTime toCase4 = DateTime.Parse(Console.ReadLine());
+                        var OnTimePerformance = flightService.GetPercentageOfOnTimePerformancePerRoute(fromCase4, toCase4);
+                        if (OnTimePerformance == null || !OnTimePerformance.Any())
+                        {
+                            Console.WriteLine("No Flight Found!");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+                        Console.WriteLine("Percentage Of On-Time Performance Per Route:");
+                        foreach (var item in OnTimePerformance)
+                        {
+                            Console.WriteLine($"RouteId: {item.RouteId} " +
+                                            $"Total Flights: {item.TotalFlights}" +
+                                            $"On-Time Flights: {item.OnTimeFlights}" +
+                                            $"Cancelled Flights: {item.CancelledFlights}" +
+                                            $"Delayed Flights: {item.DelayedFlights}" +
+                                            $"Percentage On-Time: {item.PercentageOnTime}" +
+                                            $"------------------------------------------");
 
                         }
                         Console.WriteLine("Press any key to continue...");

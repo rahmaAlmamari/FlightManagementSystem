@@ -191,6 +191,8 @@ namespace FlightManagementSystem
         }
 
         //to GetPercentageOfOnTimePerformancePerRoute using a date range ...
+        //For flights in a range, compute percentage on-time(ArrivalUtc within X mins of schedule) per
+        //airline/company or per route.
         public IEnumerable<OnTimePerformanceOutput> GetPercentageOfOnTimePerformancePerRoute(DateTime fromDate, DateTime toDate)
         {
             // Get all flights for the given date range ...
