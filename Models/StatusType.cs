@@ -10,6 +10,7 @@ namespace FlightManagementSystem.Models
     {
         Scheduled, 
         Delayed, 
-        Cancelled
+        Cancelled,
+        Landed,
     }
 }
