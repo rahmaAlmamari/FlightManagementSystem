@@ -190,5 +190,29 @@ namespace FlightManagementSystem
             return result.ToList();
         }
 
+        //to GetPercentageOfOnTimePerformancePerRoute using a date range ...
+        public IEnumerable<OnTimePerformanceOutput> GetPercentageOfOnTimePerformancePerRoute(DateTime fromDate, DateTime toDate)
+        {
+            // Get all flights for the given date range ...
+            var flights = _flightRepository.GetFlightsByDateRange(fromDate, toDate);
+            // Group by route and calculate on-time performance ...
+            var performance = flights
+                .GroupBy(flight => flight.RouteId)
+                .Select(group => new OnTimePerformanceOutput
+                {
+                    RouteId = group.Key,
+                    TotalFlights = group.Count(),
+                    OnTimeFlights = group.Count(flight => flight.Status == StatusType.Scheduled || flight.Status == StatusType.Landed),
+                    DelayedFlights = group.Count(flight => flight.Status == StatusType.Delayed),
+                    CancelledFlights = group.Count(flight => flight.Status == StatusType.Cancelled),
+                    PercentageOnTime = group.Count() > 0
+                        ? (group.Count(flight => flight.Status == StatusType.Scheduled || flight.Status == StatusType.Landed) * 100.0) / group.Count()
+                        : 0
+                })
+                .OrderByDescending(route => route.PercentageOnTime)
+                .ToList();
+            return performance;
+        }
+
     }
 }
