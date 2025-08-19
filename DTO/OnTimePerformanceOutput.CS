@@ -8,5 +8,11 @@ namespace FlightManagementSystem.DTO
 {
     public class OnTimePerformanceOutput
     {
+        public int RouteId { get; set; }
+        public int TotalFlights { get; set; }
+        public int OnTimeFlights { get; set; }
+        public int DelayedFlights { get; set; }
+        public int CancelledFlights { get; set; }
+        public double PercentageOnTime { get; set; }
     }
 }
