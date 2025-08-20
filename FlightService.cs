@@ -255,6 +255,23 @@ namespace FlightManagementSystem
             };
 
         }
+        //to GetSeatsMapForFlight ...
+        public IEnumerable<string> SeatsMap(int capacity)
+        {
+            //assuming every flight has 6 seats for a row with letter A, B, C, D, E, F ...
+            var seats = new List<string>();
+            for (int i = 1; i <= capacity / 6; i++)
+            {
+                seats.Add($"{i}A");
+                seats.Add($"{i}B");
+                seats.Add($"{i}C");
+                seats.Add($"{i}D");
+                seats.Add($"{i}E");
+                seats.Add($"{i}F");
+            }
+            return seats;
+
+        }
 
     }
 }
