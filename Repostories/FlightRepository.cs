@@ -25,7 +25,10 @@ namespace FlightManagementSystem.Repostories
         //to get flight by id ...
         public Flight GetFlightById(int id)
         {
-            return _context.Flights.FirstOrDefault(f => f.FlightId == id);
+            return _context.Flights
+                .Include(f => f.Tickets)
+                .Include(f => f.Aircraft)
+                .FirstOrDefault(f => f.FlightId == id);
         }
         //to add flight ...
         public void AddFlight(Flight flight)
