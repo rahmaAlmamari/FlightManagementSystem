@@ -46,6 +46,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("2. Get Top Routes By Revenue");
                 Console.WriteLine("3. Get Seat Occupancy Heatmap");
                 Console.WriteLine("4. Get Percentage Of On-Tim ePerformance Per Route");
+                Console.WriteLine("5. Find Available Seats For Flight");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -117,9 +118,9 @@ namespace FlightManagementSystem
                         Console.WriteLine("Seat Occupancy Heatmap:");
                         foreach (var SO in SeatOccupancy)
                         {
-                              Console.WriteLine($"FlightId: {SO.FlightId}, RouteId: {SO.RouteId}, " +
-                                              $"AircraftId: {SO.AircraftId}, Tickets Sold: {SO.TicketsSold}," +
-                                              $"Capacity: {SO.Capacity}, Occupancy Rate: {SO.OccupancyRate}");
+                            Console.WriteLine($"FlightId: {SO.FlightId}, RouteId: {SO.RouteId}, " +
+                                            $"AircraftId: {SO.AircraftId}, Tickets Sold: {SO.TicketsSold}," +
+                                            $"Capacity: {SO.Capacity}, Occupancy Rate: {SO.OccupancyRate}");
 
                         }
                         Console.WriteLine("Press any key to continue...");
@@ -150,6 +151,40 @@ namespace FlightManagementSystem
                                             $"------------------------------------------");
 
                         }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case "5":
+                        Console.WriteLine("List of all flight:");
+                        var flights = flightRepo.GetAllFlights();
+                        //to display flight id ...
+                        foreach (var flight in flights)
+                        {
+                            Console.WriteLine($"FlightId: {flight.FlightId}, FlightNumber: {flight.FlightNumber}");
+                        }
+                        Console.WriteLine("Please enter fligh id:");
+                        int flight_id = int.Parse(Console.ReadLine());
+                        var FlightSeates = flightService.FindAvailableSeatsForFlight(flight_id);
+                        if (FlightSeates == null)
+                        {
+                            Console.WriteLine("No Flight Found!");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+                        Console.WriteLine("Available Seats For Flight:");
+                        Console.WriteLine($"FlightId: {FlightSeates.FlightId} " +
+                                          $"Flight Number: {FlightSeates.FlightNumber}" +
+                                          $"Flight Capacity: {FlightSeates.FlightCapacity}" +
+                                          $"Booked Seats: {FlightSeates.BookedSeats}" +
+                                          $"Available Seats: {FlightSeates.AvailableSeats}" +
+                                          $"List of All Seat Numbers:");
+                        //to display seat numbers ...
+                        foreach (var seat in FlightSeates.SeatNumbers)
+                        {
+                            Console.WriteLine($"Seat Number: {seat}");
+                        }
+
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                         break;
