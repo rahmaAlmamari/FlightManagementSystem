@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.DTO
 {
-    class FlightSeatsOutput
+    public class FlightSeatsOutput
     {
     }
 }
