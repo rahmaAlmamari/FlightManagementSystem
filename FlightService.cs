@@ -1,4 +1,5 @@
-﻿using FlightManagementSystem.DTO;
+﻿using Azure;
+using FlightManagementSystem.DTO;
 using FlightManagementSystem.Models;
 using FlightManagementSystem.Repostories;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -167,7 +169,7 @@ namespace FlightManagementSystem
         //to GetSeatOccupancyHeatmapForEachFlight,
         //compute occupancy rate = tickets sold / aircraft capacity.Return flights with
         //occupancy > 80% or top N ...
-        public IEnumerable<SeatOccupancyOutput> GetSeatOccupancyHeatmap(DateTime fromDate,DateTime toDate)
+        public IEnumerable<SeatOccupancyOutput> GetSeatOccupancyHeatmap(DateTime fromDate, DateTime toDate)
         {
             //decimal threshold = 80.0;
             var flights = _flightRepository.GetFlightsByDateRange(fromDate, toDate);
@@ -179,7 +181,7 @@ namespace FlightManagementSystem
                     RouteId = f.RouteId,
                     AircraftId = f.AircraftId,
                     TicketsSold = f.Tickets.Count,
-                    Capacity = f.Aircraft.Capacity,  
+                    Capacity = f.Aircraft.Capacity,
                     OccupancyRate = f.Aircraft.Capacity > 0
                         ? (f.Tickets.Count * 100.0) / f.Aircraft.Capacity
                         : 0
@@ -214,6 +216,44 @@ namespace FlightManagementSystem
                 .OrderByDescending(route => route.PercentageOnTime)
                 .ToList();
             return performance;
+        }
+
+        //to FindAvailableSeatsForFlight ...
+        //Given flightId, return list of available seat numbers (assume seat map can be derived from capacity 
+        //and booked seats). Use Except set operation.
+        public FlightSeatsOutput FindAvailableSeatsForFlight(int flightId)
+        {
+            // Get the flight by flightId ...
+            var flight = _flightRepository.GetFlightById(flightId);
+            if (flight == null)
+            {
+                throw new ArgumentException("Flight not found.");
+            }
+            //to get the total number of seats from the aircraft capacity ...
+            int totalSeats = flight.Aircraft.Capacity;
+            //to get the booked seats from the tickets ...
+            var bookedSeats = flight.Tickets.Count();
+            //to get available seats by subtracting booked seats from total seats ...
+            var availableSeats = totalSeats - bookedSeats;
+            //to get the seats map for the flight using SeatsMap method ...
+            var seatsMap = SeatsMap(totalSeats);
+            //to get the booked seat numbers from the tickets ...
+            var bookedSeatNumbers = flight.Tickets
+                .Select(ticket => ticket.SeatNumber)
+                .ToList();
+            //to get the available seat numbers by using Except set operation ...
+            var availableSeatNumbers = seatsMap.Except(bookedSeatNumbers).ToList();
+            //to create a new FlightSeatsOutput object and return it ...
+            return new FlightSeatsOutput
+            {
+                FlightId = flightId,
+                FlightNumber = flight.FlightNumber,
+                FlightCapacity = totalSeats,
+                BookedSeats = bookedSeats,
+                AvailableSeats = availableSeats,
+                SeatNumbers = new LinkedList<string>(availableSeatNumbers)
+            };
+
         }
 
     }
