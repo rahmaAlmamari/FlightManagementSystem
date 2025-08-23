@@ -52,6 +52,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("8. Frequent Fliers (Top N)");
                 Console.WriteLine("9. Maintenance Alerts");
                 Console.WriteLine("10. Baggage Overweight Alerts");
+                Console.WriteLine("11. Passenger Set Operations (Union, Intersection, Active List)");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -310,6 +311,23 @@ namespace FlightManagementSystem
                                               $"Total Baggage: {b.TotalBaggageWeight} kg (Threshold {b.Threshold} kg)");
                         }
                         break;
+                    case "11": // Passenger Set Operations
+                        Console.WriteLine("=== Union of VIP + FrequentFliers ===");
+                        var unionList = flightService.GetUnionOfVipAndFrequentFliers();
+                        foreach (var p in unionList)
+                            Console.WriteLine($"{p.PassengerId}: {p.FullName}");
+
+                        Console.WriteLine("\n=== Intersection (VIP & FrequentFliers) ===");
+                        var intersectList = flightService.GetIntersectionOfVipAndFrequentFliers();
+                        foreach (var p in intersectList)
+                            Console.WriteLine($"{p.PassengerId}: {p.FullName}");
+
+                        Console.WriteLine("\n=== Union Excluding Canceled ===");
+                        var activeList = flightService.GetActiveVipAndFrequentFliers();
+                        foreach (var p in activeList)
+                            Console.WriteLine($"{p.PassengerId}: {p.FullName}");
+                        break;
+
 
 
                 }

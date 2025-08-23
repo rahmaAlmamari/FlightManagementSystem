@@ -3,6 +3,7 @@ using FlightManagementSystem.DTO;
 using FlightManagementSystem.DTOs;
 using FlightManagementSystem.Models;
 using FlightManagementSystem.Repostories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -487,6 +488,45 @@ namespace FlightManagementSystem
             return alerts;
         }
 
+        //===============================================
+        public IEnumerable<Passenger> GetUnionOfVipAndFrequentFliers()
+        {
+            var vipPassengers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.PassportNo.StartsWith("VIP")); // mock rule
+
+            var frequentFliers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.Nationality == "USA"); // mock rule
+
+            return vipPassengers.Union(frequentFliers).ToList();
+        }
+
+        public IEnumerable<Passenger> GetIntersectionOfVipAndFrequentFliers()
+        {
+            var vipPassengers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.PassportNo.StartsWith("VIP"));
+
+            var frequentFliers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.Nationality == "USA");
+
+            return vipPassengers.Intersect(frequentFliers).ToList();
+        }
+
+        public IEnumerable<Passenger> GetActiveVipAndFrequentFliers()
+        {
+            var vipPassengers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.PassportNo.StartsWith("VIP"));
+
+            var frequentFliers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.Nationality == "USA");
+
+            var canceledPassengers = _passengerRepository.GetAllPassengers()
+                .Where(p => p.DOB.Year < 1965); // mock rule (older than 60)
+
+            return vipPassengers
+                .Union(frequentFliers)
+                .Except(canceledPassengers)
+                .ToList();
+        }
 
 
 
