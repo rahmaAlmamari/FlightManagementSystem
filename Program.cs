@@ -49,6 +49,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("5. Find Available Seats For Flight");
                 Console.WriteLine("6. Get Crew Scheduling Conflicts");
                 Console.WriteLine("7. Passengers With Connections");
+                Console.WriteLine("8. Frequent Fliers (Top N)");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -242,6 +243,35 @@ namespace FlightManagementSystem
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                         break;
+                    case "8":
+                        Console.WriteLine("Enter N (top passengers):");
+                        int topN = int.Parse(Console.ReadLine());
+
+                        Console.WriteLine("Choose criteria: 1 = By Flights, 2 = By Distance");
+                        string criteria = Console.ReadLine();
+
+                        bool byDistance = criteria == "2";
+
+                        var frequentFliers = flightService.GetFrequentFliers(topN, byDistance);
+
+                        if (frequentFliers == null || !frequentFliers.Any())
+                        {
+                            Console.WriteLine("No frequent fliers found!");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+
+                        Console.WriteLine("Frequent Fliers:");
+                        foreach (var ff in frequentFliers)
+                        {
+                            Console.WriteLine($"Passenger: {ff.PassengerName}, Flights: {ff.TotalFlights}, Distance: {ff.TotalDistanceKm} km");
+                        }
+
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+
 
                 }
 
