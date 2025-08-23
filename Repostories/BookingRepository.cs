@@ -1,4 +1,5 @@
 ﻿using FlightManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,21 @@ namespace FlightManagementSystem.Repostories
         {
             return _context.Bookings
                 .Where(b => b.BookingDate >= from && b.BookingDate <= to)
+                .ToList();
+        }
+        //to get all booking with all navigation properties ...
+        public IEnumerable<Booking> GetAllBookingsWithTicketsAndFlights()
+        {
+            return _context.Bookings
+                .Include(b => b.Passenger)
+                .Include(b => b.Tickets)
+                    .ThenInclude(t => t.Flight)
+                        .ThenInclude(f => f.Route)
+                            .ThenInclude(r => r.Origin)
+                .Include(b => b.Tickets)
+                    .ThenInclude(t => t.Flight)
+                        .ThenInclude(f => f.Route)
+                            .ThenInclude(r => r.Destination)
                 .ToList();
         }
     }
