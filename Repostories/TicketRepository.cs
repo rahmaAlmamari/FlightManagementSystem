@@ -1,4 +1,5 @@
 ﻿using FlightManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,5 +65,15 @@ namespace FlightManagementSystem.Repostories
 
 
         }
+        public IEnumerable<Ticket> GetAllTicketsWithBookingPassengerAndBaggage()
+        {
+            return _context.Tickets
+                .Include(t => t.Baggage)
+                .Include(t => t.Booking)
+                    .ThenInclude(b => b.Passenger)
+                .ToList();
+        }
+
+
     }
 }
