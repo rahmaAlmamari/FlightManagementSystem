@@ -272,6 +272,37 @@ namespace FlightManagementSystem
             return seats;
 
         }
+        //to GetCrewSchedulingConflicts ...
+        //Detect crew members assigned to flights that overlap in time (time overlap check) — return conflict 
+        //DTO: CrewId, CrewName, FlightA, FlightB.
+        public IEnumerable<CrewSchedulingConflictOutput> GetCrewSchedulingConflicts()
+        {
+            // Get all flight crew members ...
+            var flightCrews = _flightCrewRepository.GetAllFlightCrewMembers();
+            var conflicts = new List<CrewSchedulingConflictOutput>();
+            // Check for scheduling conflicts ...
+            foreach (var crew in flightCrews)//to hold each flight crew member ...
+            {
+                //to find overlapping flights for the same crew member ...
+                var overlappingFlights = flightCrews
+                    .Where(otherCrew => otherCrew.CrewId == crew.CrewId &&
+                                       otherCrew.FlightId != crew.FlightId &&
+                                       (otherCrew.Flight.DepartureUtc < crew.Flight.ArrivalUtc &&
+                                        otherCrew.Flight.ArrivalUtc > crew.Flight.DepartureUtc))
+                    .ToList();
+                foreach (var conflict in overlappingFlights)
+                {
+                    conflicts.Add(new CrewSchedulingConflictOutput
+                    {
+                        CrewId = crew.CrewId,
+                        CrewName = crew.CrewMember.FullName,
+                        FlightANumber = crew.Flight.FlightNumber,
+                        FlightBNumber = conflict.Flight.FlightNumber
+                    });
+                }
+            }
+            return conflicts;
+        }
 
     }
 }
