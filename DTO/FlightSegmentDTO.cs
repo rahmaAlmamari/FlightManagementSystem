@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.DTO
 {
-    class FlightSegmentDTO
+    public class FlightSegmentDTO
     {
         public string FlightNumber { get; set; }
         public string OriginIATA { get; set; }

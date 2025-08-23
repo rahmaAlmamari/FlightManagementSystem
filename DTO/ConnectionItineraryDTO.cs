@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagementSystem.DTO
 {
-    class ConnectionItineraryDTO
+    public class ConnectionItineraryDTO
     {
         public string PassengerName { get; set; }
         public string BookingRef { get; set; }
