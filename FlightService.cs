@@ -303,6 +303,10 @@ namespace FlightManagementSystem
             }
             return conflicts;
         }
+        //to GetPassengersWithConnections ...
+        //Find passengers who have bookings with connecting
+        //flights (same booking, sequential flights within X 
+        //hours), return itinerary DTO.
         public IEnumerable<ConnectionItineraryDTO> GetPassengersWithConnections(int maxLayoverHours)
         {
             var bookings = _bookingRepository.GetAllBookingsWithTicketsAndFlights();

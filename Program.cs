@@ -48,6 +48,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("4. Get Percentage Of On-Tim ePerformance Per Route");
                 Console.WriteLine("5. Find Available Seats For Flight");
                 Console.WriteLine("6. Get Crew Scheduling Conflicts");
+                Console.WriteLine("7. Passengers With Connections");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -212,6 +213,36 @@ namespace FlightManagementSystem
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                         break;
+                    case "7":
+                        Console.WriteLine("Enter maximum layover hours:");
+                        int maxLayover = int.Parse(Console.ReadLine());
+
+                        var connections = flightService.GetPassengersWithConnections(maxLayover);
+
+                        if (connections == null || !connections.Any())
+                        {
+                            Console.WriteLine("No passengers with connections found!");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+
+                        Console.WriteLine("Passengers With Connections:");
+                        foreach (var itinerary in connections)
+                        {
+                            Console.WriteLine($"Passenger: {itinerary.PassengerName}, Booking Ref: {itinerary.BookingRef}");
+                            foreach (var seg in itinerary.Segments)
+                            {
+                                Console.WriteLine($"   Flight: {seg.FlightNumber}, {seg.OriginIATA} -> {seg.DestinationIATA}, " +
+                                                  $"Departure: {seg.DepartureUtc}, Arrival: {seg.ArrivalUtc}");
+                            }
+                            Console.WriteLine("------------------------------------------");
+                        }
+
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+
                 }
 
             } while (exit);
