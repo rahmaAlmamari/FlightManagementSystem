@@ -410,6 +410,56 @@ namespace FlightManagementSystem
                     .ToList();
             }
         }
+        //to GetMaintenanceAlerts ...
+        //Aircraft with cumulative flight hours > threshold or
+        //last maintenance older than Y days — requires 
+        //computing sum of distances or flights per
+        //aircraft(simulate hours = distance / avg speed). 
+        public IEnumerable<MaintenanceAlertDTO> GetMaintenanceAlerts(double hourThreshold, int maxDaysSinceMaintenance)
+        {
+            const double avgSpeedKmH = 800; // simulate average speed
+            var aircrafts = _aircraftRepository.GetAllAircraftWithFlightsAndMaintenances();
+
+            var alerts = new List<MaintenanceAlertDTO>();
+
+            foreach (var a in aircrafts)
+            {
+                double totalHours = a.Flights
+                    .Select(f => f.Route.DistanceKm / avgSpeedKmH)
+                    .Sum();
+
+                var lastMaintenanceDate = a.Maintenances.Any()
+                    ? a.Maintenances.Max(m => m.MaintenanceDate)
+                    : DateTime.MinValue;
+
+                if (totalHours > hourThreshold)
+                {
+                    alerts.Add(new MaintenanceAlertDTO
+                    {
+                        AircraftId = a.AircraftId,
+                        AircraftModel = a.Model,
+                        TotalFlightHours = totalHours,
+                        LastMaintenanceDate = lastMaintenanceDate,
+                        Reason = "Exceeded Flight Hours"
+                    });
+                }
+                else if ((DateTime.Now - lastMaintenanceDate).TotalDays > maxDaysSinceMaintenance)
+                {
+                    alerts.Add(new MaintenanceAlertDTO
+                    {
+                        AircraftId = a.AircraftId,
+                        AircraftModel = a.Model,
+                        TotalFlightHours = totalHours,
+                        LastMaintenanceDate = lastMaintenanceDate,
+                        Reason = "Maintenance Overdue"
+                    });
+                }
+            }
+
+            return alerts;
+        }
+
+
 
 
 
