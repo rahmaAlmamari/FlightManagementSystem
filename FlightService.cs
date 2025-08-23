@@ -303,6 +303,75 @@ namespace FlightManagementSystem
             }
             return conflicts;
         }
+        public IEnumerable<ConnectionItineraryDTO> GetPassengersWithConnections(int maxLayoverHours)
+        {
+            var bookings = _bookingRepository.GetAllBookingsWithTicketsAndFlights();
+            // assume repo includes Passenger, Tickets -> Flight -> Route -> Airports
+
+            var result = new List<ConnectionItineraryDTO>();
+
+            foreach (var booking in bookings)
+            {
+                var flights = booking.Tickets
+                    .Select(t => t.Flight)
+                    .OrderBy(f => f.DepartureUtc)
+                    .ToList();
+
+                var segments = new List<FlightSegmentDTO>();
+
+                for (int i = 0; i < flights.Count - 1; i++)
+                {
+                    var current = flights[i];
+                    var next = flights[i + 1];
+
+                    // Check connection condition
+                    bool sameAirport = current.Route.Destination.AirportId == next.Route.Origin.AirportId;
+                    var layover = next.DepartureUtc - current.ArrivalUtc;
+                    bool withinLayover = layover.TotalHours > 0 && layover.TotalHours <= maxLayoverHours;
+
+                    if (sameAirport && withinLayover)
+                    {
+                        // Add both segments if not already added
+                        if (!segments.Any(s => s.FlightNumber == current.FlightNumber))
+                        {
+                            segments.Add(new FlightSegmentDTO
+                            {
+                                FlightNumber = current.FlightNumber,
+                                OriginIATA = current.Route.Origin.IATA,
+                                DestinationIATA = current.Route.Destination.IATA,
+                                DepartureUtc = current.DepartureUtc,
+                                ArrivalUtc = current.ArrivalUtc
+                            });
+                        }
+
+                        if (!segments.Any(s => s.FlightNumber == next.FlightNumber))
+                        {
+                            segments.Add(new FlightSegmentDTO
+                            {
+                                FlightNumber = next.FlightNumber,
+                                OriginIATA = next.Route.Origin.IATA,
+                                DestinationIATA = next.Route.Destination.IATA,
+                                DepartureUtc = next.DepartureUtc,
+                                ArrivalUtc = next.ArrivalUtc
+                            });
+                        }
+                    }
+                }
+
+                if (segments.Count > 1)
+                {
+                    result.Add(new ConnectionItineraryDTO
+                    {
+                        PassengerName = booking.Passenger.FullName,
+                        BookingRef = booking.BookingRef,
+                        Segments = segments
+                    });
+                }
+            }
+
+            return result;
+        }
+
 
     }
 }
