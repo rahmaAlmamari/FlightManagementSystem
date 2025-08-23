@@ -1,5 +1,6 @@
 ﻿using Azure;
 using FlightManagementSystem.DTO;
+using FlightManagementSystem.DTOs;
 using FlightManagementSystem.Models;
 using FlightManagementSystem.Repostories;
 using System;
@@ -375,6 +376,41 @@ namespace FlightManagementSystem
 
             return result;
         }
+        //to GetFrequentFliers ...
+        //Top N passengers by number of flights or total
+        //distance flown (sum of route distances via tickets). 
+        public IEnumerable<FrequentFlierDTO> GetFrequentFliers(int topN, bool byDistance = false)
+        {
+            var passengers = _passengerRepository.GetAllPassengersWithBookings();
+
+            var query = passengers.Select(p => new FrequentFlierDTO
+            {
+                PassengerName = p.FullName,
+                TotalFlights = p.Bookings
+                    .SelectMany(b => b.Tickets)
+                    .Count(),
+                TotalDistanceKm = p.Bookings
+                    .SelectMany(b => b.Tickets)
+                    .Select(t => t.Flight.Route.DistanceKm)
+                    .Sum()
+            });
+
+            if (byDistance)
+            {
+                return query
+                    .OrderByDescending(x => x.TotalDistanceKm)
+                    .Take(topN)
+                    .ToList();
+            }
+            else
+            {
+                return query
+                    .OrderByDescending(x => x.TotalFlights)
+                    .Take(topN)
+                    .ToList();
+            }
+        }
+
 
 
     }
