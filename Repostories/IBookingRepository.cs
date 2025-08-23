@@ -10,5 +10,6 @@ namespace FlightManagementSystem.Repostories
         Booking GetBookingById(int id);
         void UpdateBooking(Booking booking);
         IEnumerable<Booking> GetBookingsByDateRange(DateTime from, DateTime to);
+        IEnumerable<Booking> GetAllBookingsWithTicketsAndFlights();
     }
 }
