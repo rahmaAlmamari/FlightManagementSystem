@@ -47,6 +47,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("3. Get Seat Occupancy Heatmap");
                 Console.WriteLine("4. Get Percentage Of On-Tim ePerformance Per Route");
                 Console.WriteLine("5. Find Available Seats For Flight");
+                Console.WriteLine("6. Get Crew Scheduling Conflicts");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -183,6 +184,29 @@ namespace FlightManagementSystem
                         foreach (var seat in FlightSeates.SeatNumbers)
                         {
                             Console.WriteLine($"Seat Number: {seat}");
+                        }
+
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case "6":
+                        var CrewSchedulingConflicts = flightService.GetCrewSchedulingConflicts();
+                        if (CrewSchedulingConflicts == null)
+                        {
+                            Console.WriteLine("No Crew Scheduling Conflicts Found!");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            continue;
+                        }
+                        Console.WriteLine("Crew Scheduling Conflicts:");
+                        //to display Crew Scheduling Conflicts details ...
+                        foreach (var crew in CrewSchedulingConflicts)
+                        {
+                            Console.WriteLine($"Crew Id: {crew.CrewId}\n" +
+                                              $"Crew Name: {crew.CrewName}" +
+                                              $"Flight A Number: {crew.FlightANumber}" +
+                                              $"Flight B Number: {crew.FlightBNumber}" +
+                                              $"------------------------------");
                         }
 
                         Console.WriteLine("Press any key to continue...");
