@@ -51,6 +51,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("7. Passengers With Connections");
                 Console.WriteLine("8. Frequent Fliers (Top N)");
                 Console.WriteLine("9. Maintenance Alerts");
+                Console.WriteLine("10. Baggage Overweight Alerts");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -298,7 +299,17 @@ namespace FlightManagementSystem
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                         break;
-
+                    case "10":
+                        Console.WriteLine("Enter baggage weight threshold (kg):");
+                        decimal weightThreshold = decimal.Parse(Console.ReadLine());
+                        var baggageAlerts = flightService.GetBaggageOverweightAlerts(weightThreshold);
+                        Console.WriteLine("Baggage Overweight Alerts:");
+                        foreach (var b in baggageAlerts)
+                        {
+                            Console.WriteLine($"Passenger: {b.PassengerName}, Ticket {b.TicketId}, " +
+                                              $"Total Baggage: {b.TotalBaggageWeight} kg (Threshold {b.Threshold} kg)");
+                        }
+                        break;
 
 
                 }
