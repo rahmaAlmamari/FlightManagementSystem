@@ -50,6 +50,7 @@ namespace FlightManagementSystem
                 Console.WriteLine("6. Get Crew Scheduling Conflicts");
                 Console.WriteLine("7. Passengers With Connections");
                 Console.WriteLine("8. Frequent Fliers (Top N)");
+                Console.WriteLine("9. Maintenance Alerts");
                 Console.WriteLine("0. Exit");
                 Console.Write("Please select an option: ");
                 string choice = Console.ReadLine();
@@ -271,6 +272,33 @@ namespace FlightManagementSystem
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                         break;
+                    case "9":
+                        Console.WriteLine("Enter max flight hours threshold:");
+                        double hourThreshold = double.Parse(Console.ReadLine());
+
+                        Console.WriteLine("Enter max days since last maintenance:");
+                        int maxDays = int.Parse(Console.ReadLine());
+
+                        var alerts = flightService.GetMaintenanceAlerts(hourThreshold, maxDays);
+
+                        if (!alerts.Any())
+                        {
+                            Console.WriteLine("No maintenance alerts found!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Maintenance Alerts:");
+                            foreach (var alert in alerts)
+                            {
+                                Console.WriteLine($"Aircraft: {alert.AircraftModel}, Hours: {alert.TotalFlightHours:F2}, " +
+                                                  $"Last Maintenance: {alert.LastMaintenanceDate:d}, Reason: {alert.Reason}");
+                            }
+                        }
+
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break;
+
 
 
                 }
