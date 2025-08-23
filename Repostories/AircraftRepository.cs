@@ -1,4 +1,5 @@
 ﻿using FlightManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,5 +57,15 @@ namespace FlightManagementSystem.Repostories
                 .ToList();
 
         }
+        public IEnumerable<Aircraft> GetAllAircraftWithFlightsAndMaintenances()
+        {
+            return _context.Aircrafts
+                .Include(a => a.Flights)
+                    .ThenInclude(f => f.Route)
+                .Include(a => a.Maintenances)
+                .ToList();
+        }
+
+
     }
 }
