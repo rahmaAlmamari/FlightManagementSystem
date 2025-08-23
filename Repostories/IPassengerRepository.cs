@@ -9,5 +9,6 @@ namespace FlightManagementSystem.Repostories
         IEnumerable<Passenger> GetAllPassengers();
         Passenger GetPassengerById(int id);
         void UpdatePassenger(Passenger passenger);
+        public IEnumerable<Passenger> GetAllPassengersWithBookings();
     }
 }
