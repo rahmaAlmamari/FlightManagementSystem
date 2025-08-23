@@ -1,4 +1,5 @@
 ﻿using FlightManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,15 @@ namespace FlightManagementSystem.Repostories
                 _context.Passengers.Remove(passenger);
                 _context.SaveChanges();
             }
+        }
+        public IEnumerable<Passenger> GetAllPassengersWithBookings()
+        {
+            return _context.Passengers
+                .Include(p => p.Bookings)
+                    .ThenInclude(b => b.Tickets)
+                        .ThenInclude(t => t.Flight)
+                            .ThenInclude(f => f.Route)
+                .ToList();
         }
     }
 }
