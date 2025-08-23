@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
@@ -458,7 +459,33 @@ namespace FlightManagementSystem
 
             return alerts;
         }
+        //to GetBaggageOverweightAlerts ...
+        //Tickets whose total baggage weight exceeds threshold(e.g., 30kg per passenger).
+        //Use GroupBy ticket
+        //and sum baggage weights.
+        public IEnumerable<BaggageAlertDTO> GetBaggageOverweightAlerts(decimal weightThreshold)
+        {
+            var tickets = _ticketRepository.GetAllTicketsWithBookingPassengerAndBaggage();
 
+            var alerts = tickets
+                .Select(t => new
+                {
+                    Ticket = t,
+                    TotalWeight = t.Baggage.Sum(b => b.WeightKg)
+                })
+                .Where(x => x.TotalWeight > weightThreshold)
+                .Select(x => new BaggageAlertDTO
+                {
+                    TicketId = x.Ticket.TicketId,
+                    PassengerId = x.Ticket.Booking.Passenger.PassengerId,
+                    PassengerName = x.Ticket.Booking.Passenger.FullName,
+                    TotalBaggageWeight = x.TotalWeight,
+                    Threshold = weightThreshold
+                })
+                .ToList();
+
+            return alerts;
+        }
 
 
 
